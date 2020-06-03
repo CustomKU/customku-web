@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>페이스북 추첨</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <script src="script.js"></script>
+    <style>
+        * {
+            font-family: 'Spoqa Han Sans', 'Sans-serif' !important;
+        }
+
+        .container{
+            margin-bottom: 7rem;
+        }
+
+        h1 {
+            font-size: 5rem !important;
+            font-weight: 100 !important;
+            text-align: center !important;
+            padding-top: 4rem !important;
+            padding-bottom: 8rem !important;
+        }
+
+        h2 {
+            font-weight: 100 !important;
+            font-size: 3rem !important;
+        }
+
+        p {
+            margin-bottom: 10rem !important;
+        }
+
+        .start {
+            display: inline-block;
+            text-align: center !important;
+            padding-top: 7rem;
+        }
+
+        .em1 {
+            color: red;
+        }
+
+        .em2 {
+            color: blue;
+        }
+
+        .em3 {
+            font-size: 6rem;
+        }
+
+        #login {
+            display: none;
+        }
+
+        #result_wrap{
+            margin-top: 7rem;
+            display:none;
+        }
+
+        .reactions img{
+            width: 4rem;
+            margin-right: 1rem;
+            vertical-align: middle;
+        }
+
+
+
+
+    </style>
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <!-- CSS Reset -->
+    <link rel="stylesheet" href="//cdn.rawgit.com/necolas/normalize.css/master/normalize.css">
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+
+    <!-- You should properly set the path from the main file. -->
+    <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="buttons.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/async/2.5.0/async.min.js"></script>
+</head>
+
+<body>
+<div class="ui container">
+    <div class="">
+        <h1>페이스북 추첨</h1>
+        <h2>소개</h2>
+        <p>
+            이 서비스는 생활코딩 페이스북 그룹의 <a href="https://opentutorials.org/course/2897/17711" target="_blank">이고잉님의 강좌</a>와 <a href="https://egoing.github.io/comment-lottery/index.html" target="_blank">원본 서비스</a>를 참고하여 만들어젔습니다.
+        
+        
+         <div class="login">
+            <h2>로그인</h2>
+            <p>
+                이 서비스는 로그인을 필요로 합니다. 로그인을 하는 이유는 페이스북에 접근해서 댓글 정보를 가져오기 위해서는 기본적인 인증(access token)이 필요하기 때문입니다. 로그인 외에
+                어떤
+                정보도
+                수집하지 않습니다. <strong><u>이렇게 말하는 서비스가 있다면 항상 의심하셔야 합니다.</u></strong> 그래서 아래처럼 소스코드를 공개합니다. 보안적인 문제가 있는지를
+                주변에 계신
+                개발자에게 문의해보고 사용하세요. 항상 의심하세요.
+                ^^
+                <a href="https://github.com/egoing/comment-lottery"
+                   target="_blank">이고잉님 Github comment-lottery 프로젝트</a>
+                <br><br>
+            <fb:login-button class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true">
+            </fb:login-button>
+        </p>
+
+        <h2>주소</h2>
+        아래의 형식에 맞는 주소를 사용해주세요.
+        <table class="ui celled padded table">
+            <tr>
+                <td id="table-type">구분</td>
+                <td>페북글의 주소</td>
+            </tr>
+            <tr>
+                <td>그룹</td>
+                <td>https://www.facebook.com/groups/279986665743131/permalink/<span class="em1">327623594312771</span>
+                </td>
+            </tr>
+            <tr>
+                <td>페이지</td>
+                <td><span style="text-decoration: line-through">
+                    https://www.facebook.com/permalink.php?story_fbid=<span
+                        class="em2">1440324862722276</span>&amp;id=<span
+                        class="em1">218158748272233</span>
+                </span> 현재 작동하지 않고 있습니다.
+                </td>
+            </tr>
+        </table>
+        <div class="ui form">
+            <input type="text" id="src" placeholder="형식에 맞게 주소를 적어주세요."
+                   value="">
+            <div class="start">
+                <button class="button button-3d button-primary button-rounded button-giant"
+                        onclick="lottery();return false;">추첨!
+                </button>
+            </div>
+        </div>
+
+        <div id="result_wrap">
+            <div class="ui top attached tabular menu " id="result">
+                <a class="active item" data-tab="comment">댓글(<span id="result-comment-count">0</span>)</a>
+                <a class="item" data-tab="like">리액션-좋아요,기뻐요,하하 등등(<span id="result-like-count">0</span>)</a>
+                <!--<a class="item" data-tab="sharedpost">공유하기(<span id="result-sharedpost-count">0</span>)</a>-->
+                <a class="item" data-tab="all">모두(<span id="result-sum-count">0</span>)</a>
+            </div>
+            <div class="ui bottom attached active tab segment" data-tab="comment" id="result-comments"></div>
+            <div class="ui bottom attached tab segment" data-tab="like" id="result-likes"></div>
+            <!--<div class="ui bottom attached tab segment" data-tab="sharedpost" id="result-sharedposts"></div>-->
+            <div class="ui bottom attached tab segment" data-tab="all" id="result-sum"></div>
+            <script>
+                $('.menu .item')
+                    .tab()
+                ;
+            </script>
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>

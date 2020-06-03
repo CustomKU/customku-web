@@ -1,0 +1,41 @@
+@import url(http://fonts.googleapis.com/css?family=roboto:300,400);
+
+body {
+  color: #666;
+  font: normal 14px 'roboto', sans-serif;
+  background: #ECF0F1;
+}
+
+ul.countdown {
+  list-style: none;
+  margin: 75px 0;
+  padding: 0;
+  display: block;
+  text-align: center;
+}
+
+ul.countdown li { display: inline-block; }
+
+ul.countdown li span {
+  font-size: 80px;
+  font-weight: 300;
+  line-height: 80px;
+  padding: 0 20px;
+  border-top: 1px solid #C0392B;
+  border-bottom: 1px solid #C0392B;
+  margin-left: -4px;
+}
+
+ul.countdown li p {
+  color: #a7abb1;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.days {
+  background-color: #C0392B;
+  padding: 0 10px;
+  color: #fff;
+}
+
+.last { border-right: 1px solid #C0392B; }
