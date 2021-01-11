@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  nginx:
+    build:
+      context: .
+    environment:
+      - VIRTUAL_HOST=specterku.me
+      - LETSENCRYPT_HOST=specterku.me
+    restart: always
+    network_mode: bridge
