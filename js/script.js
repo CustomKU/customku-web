@@ -42,7 +42,7 @@ $(document).ready(function () {
     var element = $(".element");
     $(function() {
       element.typed({
-        strings: ["a Web Designer.", "a Web Developer.", "a Graphic Designer.", "an Entrepreneur." ],
+        strings: ["an Entrepreneur.", "a Developer.", "a Chief Executive Officer.", "a Chief Product Officer."],
         typeSpeed: 100,
         loop: true,
       });
